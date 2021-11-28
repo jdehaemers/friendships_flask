@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col">
+                <div class="row">
+                    <h2>Friendships</h2>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <thead class="table table-secondary">
+                            <tr>
+                                <th>User</th>
+                                <th>Friend</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table">
+                            {% for friendship in friendships %}
+                            <tr>
+                                <td>{{ friendship.first_name }} {{ friendship.last_name }}</td>
+                                <td>{{ friendship['b.first_name'] }} {{ friendship['b.last_name'] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col">
+                <div class="row bg-secondary text-white mb-4 p-3">
+                    <div class="row">
+                        <h2>Add User</h2>
+                    </div>
+                    <form action="/create_user" method='POST'>
+                        <div class="form-group">
+                            <label for="first_name" class='mb-1'>First Name: </label>
+                            <input type="text" name="first_name" class='form-control'>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name" class='mb-1'>Last Name: </label>
+                            <input type="text" name="last_name" class='form-control'>
+                        </div>
+                        <button type='submit' class='btn btn-primary m-3'>Add User</button>
+                    </form>
+                </div>
+                <div class="row bg-dark text-white mb-4 p-3">
+                    <div class="row">
+                        <h2>Create Friendship</h2>
+                    </div>
+                    <form action="/create_friendship" method='POST'>
+                        <div class="form-group">
+                            <label for="user" class='mb-1'>User: </label>
+                            <select name="user" class='form-control'>
+                                <option selected>-- select --</option>
+                                {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="friend" class='mb-1'>Friend: </label>
+                            <select name="friend" class='form-control'>
+                                <option selected>-- select --</option>
+                                {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type='submit' class='btn btn-primary m-3'>Befriend</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</body>
+</html>
